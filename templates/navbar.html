@@ -1,0 +1,41 @@
+{% load static %}
+
+<nav class="w-full flex justify-between items-center py-3 px-4 fixed z-50">
+    <div class="w-6/12">
+        <a href="/">
+            <img class="w-5/10" src="{% static 'images/hasflixlogo.png' %}">
+        </a>
+    </div>
+    {% if user.is_authenticated %}
+    <div class="w-6/10 flex flex-nowrap justify-end">
+        <div class="mr-2">
+            <form method="get" action="{% url 'filme:pesquisafilme' %}">
+                <input type="text" class="py-2 px-2 bg-stone-900 rounded-md text-white" name="query" value="{{ request.GET.query }}" placeholder="Pesquisar...">
+                <input type="submit" value="">
+            </form>
+        </div>
+        <div class="mr-2">
+            {% if user.is_authenticated %}
+            <a href="{% url 'filme:logout' %}">
+                <butoon class="bg-red-600 text-white py-2 px-4 rounded-md">
+                    Sair
+                </butoon>
+            </a>
+            {% else %}
+            <a href="{% url 'filme:login' %}">
+                <butoon class="bg-red-600 text-white py-2 px-4 rounded-md">
+                    Login
+                </butoon>
+            </a>
+            {% endif %}
+        </div>
+        <div class="mr-2">
+            <a href="{% url 'filme:editarperfil' request.user.pk %}">
+                <butoon class="bg-red-600 text-white py-2 px-4 rounded-md">
+                    Editar Perfil
+                </butoon>
+            </a>
+        </div>
+    </div>
+    {% endif %}
+</nav>
